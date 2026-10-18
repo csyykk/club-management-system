@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>社团管理后台</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="nav">
+        <a href="#member">成员管理</a>
+        <a href="#activity">活动管理</a>
+        <a href="#notice">公告管理</a>
+        <a onclick="logout()" style="cursor:pointer">退出登录</a>
+    </div>
+    <div class="container">
+        <section id="member">
+            <h3>社团成员管理</h3>
+            <div>
+                姓名：<input id="mName">
+                部门：<input id="mDept">
+                电话：<input id="mPhone">
+                <button onclick="addMember()">新增成员</button>
+            </div>
+            <table id="memberTable">
+                <tr><th>ID</th><th>姓名</th><th>部门</th><th>电话</th><th>操作</th></tr>
+            </table>
+        </section>
+        <hr>
+        <section id="activity">
+            <h3>活动管理</h3>
+            <div>
+                活动名称：<input id="aTitle">
+                时间：<input id="aTime">
+                详情：<input id="aInfo">
+                <button onclick="addActivity()">发布活动</button>
+            </div>
+            <table id="actTable">
+                <tr><th>ID</th><th>活动名称</th><th>时间</th><th>详情</th><th>操作</th></tr>
+            </table>
+        </section>
+        <hr>
+        <section id="notice">
+            <h3>公告管理</h3>
+            <div>
+                公告标题：<input id="nTitle">
+                内容：<input id="nContent">
+                <button onclick="addNotice()">发布公告</button>
+            </div>
+            <table id="noticeTable">
+                <tr><th>ID</th><th>标题</th><th>内容</th><th>操作</th></tr>
+            </table>
+        </section>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        // 页面加载渲染数据
+        window.onload = function(){
+            renderMember();
+            renderActivity();
+            renderNotice();
+        }
+        // 成员
+        function renderMember(){
+            let list = getMembers();
+            let table = document.getElementById("memberTable");
+            table.innerHTML = "<tr><th>ID</th><th>姓名</th><th>部门</th><th>电话</th><th>操作</th></tr>";
+            list.forEach(item=>{
+                table.innerHTML += `<tr>
+                    <td>${item.id}</td>
+                    <td>${item.name}</td>
+                    <td>${item.dept}</td>
+                    <td>${item.phone}</td>
+                    <td><button class="operate-btn" onclick="delMember(${item.id})">删除</button></td>
+                </tr>`
+            })
+        }
+        function addMember(){
+            let list = getMembers();
+            let newId = Date.now();
+            list.push({
+                id:newId,
+                name:document.getElementById("mName").value,
+                dept:document.getElementById("mDept").value,
+                phone:document.getElementById("mPhone").value
+            })
+            localStorage.setItem("memberList",JSON.stringify(list));
+            renderMember();
+        }
+        function delMember(id){
+            let list = getMembers().filter(x=>x.id!==id);
+            localStorage.setItem("memberList",JSON.stringify(list));
+            renderMember();
+        }
+
+        //活动
+        function renderActivity(){
+            let list = getActivities();
+            let table = document.getElementById("actTable");
+            table.innerHTML = "<tr><th>ID</th><th>活动名称</th><th>时间</th><th>详情</th><th>操作</th></tr>";
+            list.forEach(item=>{
+                table.innerHTML += `<tr>
+                    <td>${item.id}</td>
+                    <td>${item.title}</td>
+                    <td>${item.time}</td>
+                    <td>${item.info}</td>
+                    <td><button class="operate-btn" onclick="delAct(${item.id})">删除</button></td>
+                </tr>`
+            })
+        }
+        function addActivity(){
+            let list = getActivities();
+            list.push({
+                id:Date.now(),
+                title:document.getElementById("aTitle").value,
+                time:document.getElementById("aTime").value,
+                info:document.getElementById("aInfo").value
+            })
+            localStorage.setItem("activityList",JSON.stringify(list));
+            renderActivity();
+        }
+        function delAct(id){
+            let list = getActivities().filter(x=>x.id!==id);
+            localStorage.setItem("activityList",JSON.stringify(list));
+            renderActivity();
+        }
+
+        //公告
+        function renderNotice(){
+            let list = getNotices();
+            let table = document.getElementById("noticeTable");
+            table.innerHTML = "<tr><th>ID</th><th>标题</th><th>内容</th><th>操作</th></tr>";
+            list.forEach(item=>{
+                table.innerHTML += `<tr>
+                    <td>${item.id}</td>
+                    <td>${item.title}</td>
+                    <td>${item.content}</td>
+                    <td><button class="operate-btn" onclick="delNotice(${item.id})">删除</button></td>
+                </tr>`
+            })
+        }
+        function addNotice(){
+            let list = getNotices();
+            list.push({
+                id:Date.now(),
+                title:document.getElementById("nTitle").value,
+                content:document.getElementById("nContent").value
+            })
+            localStorage.setItem("noticeList",JSON.stringify(list));
+        }
+        function delNotice(id){
+            let list = getNotices().filter(x=>x.id!==id);
+            localStorage.setItem("noticeList",JSON.stringify(list));
+            renderNotice();
+        }
+
+        //退出登录
+        function logout(){
+            localStorage.removeItem("loginUser");
+            window.location.href="index.html";
+        }
+    </script>
+</body>
+</html>
