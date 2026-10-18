@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>社团实践管家 - 活动大厅</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!--顶部导航栏-->
+<header class="navbar">
+    <div class="logo">
+        <span class="logo-icon">S</span>
+        <span>社团实践管家</span>
+    </div>
+    <div class="nav-menu">
+        <a href="#" class="active">活动大厅</a>
+        <a href="#">我的实践</a>
+        <a href="manage.html">管理后台</a>
+    </div>
+    <div class="user-avatar">👤</div>
+</header>
+
+<main class="container">
+    <div class="row">
+        <!--左侧主区域-->
+        <div class="main-content">
+            <!--蓝色欢迎横幅-->
+            <div class="welcome-banner">
+                <div>
+                    <h2>欢迎回来，陈同学</h2>
+                    <p>本学期你已参与 4 场活动，累计获得 32 实践积分。继续加油！</p>
+                    <button class="btn-white">查看积分明细</button>
+                </div>
+                <div class="banner-triangle"></div>
+            </div>
+
+            <!--近期活动区域-->
+            <div class="section">
+                <div class="section-head">
+                    <h3>近期活动</h3>
+                    <div>
+                        <a href="#">全部</a>
+                        <a href="#">招募中</a>
+                    </div>
+                </div>
+                <div class="activity-card-wrap" id="activityBox">
+                    <!--活动卡片由js渲染-->
+                </div>
+            </div>
+
+            <!--实践排行榜-->
+            <div class="section">
+                <div class="section-head">
+                    <h3>实践分排行榜 (本学期)</h3>
+                    <a href="#">查看完整排名 →</a>
+                </div>
+                <table class="rank-table" id="rankTable">
+                    <thead>
+                        <tr>
+                            <th>排名</th>
+                            <th>成员</th>
+                            <th>所属部门</th>
+                            <th>参与次数</th>
+                            <th>总实践分</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--js渲染排行榜-->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!--右侧统计栏-->
+        <div class="side-bar">
+            <div class="stat-card">
+                <h4>快速统计</h4>
+                <div class="stat-item">
+                    <span>进行中活动</span>
+                    <span>3</span>
+                </div>
+                <div class="stat-item">
+                    <span>待分配任务</span>
+                    <span>1</span>
+                </div>
+                <div class="stat-item">
+                    <span>全社团平均分</span>
+                    <span>24.5</span>
+                </div>
+                <button class="btn-blue-full">发布新活动</button>
+            </div>
+        </div>
+    </div>
+</main>
+<footer class="footer">
+    <p>社团实践管家 v1.0 &nbsp;&nbsp; 使用指南 | 隐私政策 | 联系我们 &nbsp;&nbsp; ©2026 社团实践管家. All rights reserved.</p>
+</footer>
+<script src="script.js"></script>
+<script>
+window.onload = function(){
+    renderActivities();
+    renderRankList();
+}
+</script>
+</body>
+</html>
